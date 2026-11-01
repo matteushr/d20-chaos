@@ -19,6 +19,9 @@ public class D20Chaos {
     public D20Chaos(IEventBus modEventBus) {
         LOGGER.info("[D20 Chaos] Initializing D20 Chaos Mod for Minecraft 1.21.1 NeoForge...");
 
+        // Detect third-party optional mod integrations
+        com.d20chaos.integration.ModIntegrations.init();
+
         // Register custom D20 items
         ModItems.register(modEventBus);
 

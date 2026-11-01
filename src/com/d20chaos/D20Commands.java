@@ -55,8 +55,25 @@ public class D20Commands {
                         var reg = D20EventDispatcher.getRegistry();
                         StringBuilder sb = new StringBuilder("§6=== [D20 Registered Modules (" + reg.size() + ")] ===\n");
                         for (var entry : reg.values()) {
-                            sb.append(String.format("§e- §f%s §7(%s) [%s | %s]\n",
-                                    entry.getId(), entry.getName(), entry.getCategory(), entry.getTier().getTitle()));
+                            String status = entry.isAvailable() ? "§a[✓]" : "§c[✗ Requires: " + entry.getRequiredModId() + "]";
+                            sb.append(String.format("§e- §f%s §7(%s) [%s | %s] %s\n",
+                                    entry.getId(), entry.getName(), entry.getCategory(), entry.getTier().getTitle(), status));
+                        }
+                        ctx.getSource().sendSuccess(() -> Component.literal(sb.toString().trim()), false);
+                        return 1;
+                    })
+                )
+                // /d20 integrations - Displays active and detected third-party mod integrations
+                .then(Commands.literal("integrations")
+                    .executes(ctx -> {
+                        StringBuilder sb = new StringBuilder("§6=== [D20 Mod Integrations] ===\n");
+                        for (var mod : com.d20chaos.integration.ModIntegrations.SupportedMod.values()) {
+                            boolean loaded = com.d20chaos.integration.ModIntegrations.isModLoaded(mod.getModId());
+                            sb.append(String.format("§e- §f%s §7(%s): %s\n  §8%s\n",
+                                    mod.getDisplayName(),
+                                    mod.getModId(),
+                                    loaded ? "§a[✓] ACTIVE (true)" : "§c[✗] NOT INSTALLED (false)",
+                                    mod.getDescription()));
                         }
                         ctx.getSource().sendSuccess(() -> Component.literal(sb.toString().trim()), false);
                         return 1;
@@ -198,16 +215,19 @@ public class D20Commands {
                         int seconds = (data.getCycleTimerTicks() / 20) % 60;
                         int dur = D20Manager.getCycleDurationTicks() / 20;
 
+                        boolean luckyActive = com.d20chaos.integration.ModIntegrations.isLuckyBlockLoaded();
                         ctx.getSource().sendSuccess(() -> Component.literal(
                                 String.format("§6=== [D20 Status] ===\n" +
                                                 "§eGeneral Decision: §f%d §7(%s %s)\n" +
                                                 "§eRemaining Time: §f%02d:%02d\n" +
                                                 "§eCycle Duration: §f%ds\n" +
                                                 "§eChaos Level: §f%d%%\n" +
-                                                "§eTrigger Rate: §f%.1f%%",
+                                                "§eTrigger Rate: §f%.1f%%\n" +
+                                                "§eLucky Block: %s",
                                         dec, tier.getStatusTag(), tier.getTitle(),
                                         minutes, seconds, dur, data.getChaosLevel(),
-                                        D20Manager.getTriggerChance() * 100)
+                                        D20Manager.getTriggerChance() * 100,
+                                        luckyActive ? "§aACTIVE (true)" : "§7DISABLED (false)")
                         ), false);
                         return 1;
                     })

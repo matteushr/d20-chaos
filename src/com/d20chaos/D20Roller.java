@@ -32,6 +32,16 @@ public class D20Roller {
             this.title = title;
             this.description = description;
         }
+
+        public String getDescription() {
+            if (this == GREAT_SUCCESS) {
+                return LuckyBlockHelper.isAvailable() ? "x4 Drops & Lucky Block!" : "x4 Drops & Bonus Loot!";
+            }
+            if (this == NATURAL_20) {
+                return LuckyBlockHelper.isAvailable() ? "Epic Jackpot x8 + Lucky Block +100!" : "Epic Jackpot x8 + Diamonds!";
+            }
+            return description;
+        }
     }
 
     public static class RollResult {
@@ -124,13 +134,14 @@ public class D20Roller {
         // Send Action Bar message
         String luckStr = (luckMod >= 0 ? "+" : "") + luckMod + " luck";
         String msg = String.format("§6🎲 §f%d §7(%s) = §e%d §7- %s: §f%s  %s[%d%%]",
-                baseRoll, luckStr, total, category.title, category.description, tierColor, chaos);
+                baseRoll, luckStr, total, category.title, category.getDescription(), tierColor, chaos);
         player.sendSystemMessage(Component.literal(msg), true);
 
         // Pop-up Banner and Totem Screen Animations!
         switch (category) {
             case NATURAL_20:
-                TitleHelper.sendTitle(player, Component.literal("§6§l★ NATURAL 20 ★"), Component.literal("§eEpic Jackpot x8 + Lucky Block +100!"));
+                String nat20Sub = LuckyBlockHelper.isAvailable() ? "§eEpic Jackpot x8 + Lucky Block +100!" : "§eEpic Jackpot x8 + Bonus Diamonds!";
+                TitleHelper.sendTitle(player, Component.literal("§6§l★ NATURAL 20 ★"), Component.literal(nat20Sub));
                 TitleHelper.triggerTotemAnimation(new ItemStack(ModItems.D20_NAT20.get()));
                 player.serverLevel().sendParticles(ParticleTypes.TOTEM_OF_UNDYING, player.getX(), player.getY() + 1.0, player.getZ(), 40, 0.5, 0.5, 0.5, 0.2);
                 player.serverLevel().sendParticles(ParticleTypes.HAPPY_VILLAGER, player.getX(), player.getY() + 1.0, player.getZ(), 20, 0.5, 0.5, 0.5, 0.1);

@@ -75,8 +75,20 @@ All commands can be executed in chat (by operators or in singleplayer):
 | `/d20 setTier <1-20>` | Forces the macro decision to a specific roll (1 through 20). |
 | `/d20 chance <0.0-1.0>` | Adjusts the micro action trigger chance (e.g. `/d20 chance 1.0` for 100% test rolls). |
 | `/d20 trigger <event_id>` | Manually triggers any registered module by ID. |
-| `/d20 list` | Lists all registered action modules and their categories. |
-| `/d20 status` | Displays full player status (Tier, Chaos, Remaining Time, Trigger Chance). |
+| `/d20 list` | Lists all registered action modules, tiers, and availability status. |
+| `/d20 integrations` | Shows all detected and active optional mod integrations (`true`/`false`). |
+| `/d20 status` | Displays full player status (Tier, Chaos, Remaining Time, Trigger Chance, Mod Integrations). |
+
+---
+
+## 🧩 Optional Mod Integrations (`ModIntegrations`)
+
+D20 Chaos features an automatic **Mod Integration Checker** that probes loaded mods at runtime:
+- **Zero Hard Dependencies:** D20 Chaos works 100% vanilla with NeoForge.
+- **Dynamic Flag Tracking:** Integrated mods are queried on startup and mapped to active boolean flags (`true`/`false`).
+- **Graceful Feature Fallbacks:**
+  - **Lucky Block (`lucky`):** If installed, Lucky Blocks are awarded during Critical Successes (Natural 20 and Tier 5/Great Success rolls) and in dungeon loot chests. If absent, the game gracefully disables Lucky Block rewards and substitutes balanced vanilla loot (Diamonds, Emeralds, and XP) with no command errors or missing-item glitches.
+  - **Expandable:** Any future or custom event can declare `getRequiredModId()` to automatically participate in the dynamic dice pool only when that mod is detected.
 
 ---
 

@@ -70,14 +70,18 @@ public class ChestListener {
 
             case GREAT_SUCCESS:
                 player.giveExperiencePoints(30);
-                LuckyBlockHelper.giveLuckyBlock(player, 80);
+                if (LuckyBlockHelper.isAvailable()) {
+                    LuckyBlockHelper.giveLuckyBlock(player, 80);
+                }
                 ItemEntity diamonds = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, new ItemStack(Items.DIAMOND, 2));
                 level.addFreshEntity(diamonds);
                 break;
 
             case NATURAL_20:
                 player.giveExperiencePoints(60);
-                LuckyBlockHelper.giveLuckyBlock(player, 100);
+                if (LuckyBlockHelper.isAvailable()) {
+                    LuckyBlockHelper.giveLuckyBlock(player, 100);
+                }
                 ItemEntity jackpotDiamonds = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, new ItemStack(Items.DIAMOND, 6));
                 level.addFreshEntity(jackpotDiamonds);
                 break;

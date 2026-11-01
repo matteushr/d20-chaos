@@ -31,6 +31,11 @@ public class D20EventDispatcher {
         ID20ActionEvent event = REGISTRY.get(eventId.toLowerCase());
         if (event != null) {
             String playerName = ctx.player() != null ? ctx.player().getScoreboardName() : "unknown";
+            if (!event.isAvailable()) {
+                LOGGER.warn("[D20/Forced] Module '{}' is disabled because required mod '{}' is not installed.",
+                        eventId, event.getRequiredModId());
+                return false;
+            }
             LOGGER.info("[D20/Forced] Manually triggering module '{}' ({}) for {}", eventId, event.getName(), playerName);
             try {
                 boolean success = event.execute(ctx);
@@ -77,7 +82,7 @@ public class D20EventDispatcher {
 
         List<ID20ActionEvent> matching = new ArrayList<>();
         for (ID20ActionEvent ev : REGISTRY.values()) {
-            if (ev.getCategory() == category && ev.getTier() == tier) {
+            if (ev.getCategory() == category && ev.getTier() == tier && ev.isAvailable()) {
                 matching.add(ev);
             }
         }
