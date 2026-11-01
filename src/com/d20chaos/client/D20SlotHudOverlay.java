@@ -148,7 +148,7 @@ public class D20SlotHudOverlay {
         // =========================================================================
         int d20Size = 32;
         int d20X = (screenWidth - d20Size) / 2;
-        int d20Y = screenHeight - 78; // Floats cleanly above health & hunger
+        int d20Y = screenHeight - 102; // Floats cleanly above action bar & item tooltip text
 
         // Base 32x32 texture according to active tier
         ResourceLocation d20Texture = switch (tier) {

@@ -140,11 +140,11 @@ public class D20Manager {
         // Synchronize state immediately to client HUD
         syncToPlayer(player);
 
-        // Feedback in Action Bar
+        // Feedback in Chat Log (avoids Action Bar overlay collision with D20 die)
         String msg = String.format("§6🎲 [%d] %s §7-> %s",
                 microRoll, category.getDisplayName(),
                 executed ? "§aTriggered!" : "§7(Neutral / No Module)");
-        player.sendSystemMessage(Component.literal(msg), true);
+        player.sendSystemMessage(Component.literal(msg), false);
 
         return executed;
     }
