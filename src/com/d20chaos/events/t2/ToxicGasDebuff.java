@@ -27,7 +27,7 @@ public class ToxicGasDebuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Gás Tóxico";
+        return "Toxic Gas";
     }
 
     @Override
@@ -49,11 +49,11 @@ public class ToxicGasDebuff implements ID20ActionEvent {
 
         BlockPos emitPos = pos != null ? pos : player.blockPosition();
 
-        // Aplica Náusea I por 6 segundos (120 ticks) e Veneno I por 4 segundos (80 ticks)
+        // Apply Nausea I for 6 seconds (120 ticks) and Poison I for 4 seconds (80 ticks)
         player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 120, 0, false, true));
         player.addEffect(new MobEffectInstance(MobEffects.POISON, 80, 0, false, true));
 
-        // Partículas densas de fumaça e gás sulfuroso
+        // Dense smoke and sulfur gas particles
         level.sendParticles(ParticleTypes.SNEEZE, emitPos.getX() + 0.5, emitPos.getY() + 0.5, emitPos.getZ() + 0.5,
                 35, 0.5, 0.5, 0.5, 0.08);
         level.sendParticles(ParticleTypes.SMOKE, emitPos.getX() + 0.5, emitPos.getY() + 0.5, emitPos.getZ() + 0.5,
@@ -62,8 +62,8 @@ public class ToxicGasDebuff implements ID20ActionEvent {
         level.playSound(null, emitPos.getX(), emitPos.getY(), emitPos.getZ(),
                 SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 0.7f);
 
-        player.sendSystemMessage(Component.literal("§6⚠ [PENALIDADE] §eUm bolsão de gás subterrâneo se rompeu! Náusea e envenenamento."), true);
-        LOGGER.info("[D20/GasToxico] Gás tóxico liberado para {} na mineração em [{}, {}, {}].",
+        player.sendSystemMessage(Component.literal("§6⚠ [PENALTY] §eSubterranean gas pocket ruptured! Nausea and poison."), true);
+        LOGGER.info("[D20/ToxicGas] Toxic gas released for {} during mining at [{}, {}, {}].",
                 player.getScoreboardName(), emitPos.getX(), emitPos.getY(), emitPos.getZ());
         return true;
     }

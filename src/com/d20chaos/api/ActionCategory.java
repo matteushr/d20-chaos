@@ -1,11 +1,11 @@
 package com.d20chaos.api;
 
 public enum ActionCategory {
-    MINING("Mineração"),
-    MOVEMENT("Locomoção"),
-    BLOCK_PLACE("Construção"),
-    COMBAT_EXPLORE("Combate"),
-    CRAFTING("Fabricação");
+    MINING("Mining"),
+    MOVEMENT("Movement"),
+    BLOCK_PLACE("Building"),
+    COMBAT_EXPLORE("Combat"),
+    CRAFTING("Crafting");
 
     private final String displayName;
 
@@ -20,10 +20,10 @@ public enum ActionCategory {
     public String getIcon() {
         return switch (this) {
             case MINING -> "[MIN]";
-            case MOVEMENT -> "[LOC]";
-            case BLOCK_PLACE -> "[CON]";
-            case COMBAT_EXPLORE -> "[COM]";
-            case CRAFTING -> "[FAB]";
+            case MOVEMENT -> "[MOV]";
+            case BLOCK_PLACE -> "[BLD]";
+            case COMBAT_EXPLORE -> "[CBT]";
+            case CRAFTING -> "[CRF]";
         };
     }
 }

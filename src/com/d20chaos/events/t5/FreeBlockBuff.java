@@ -29,7 +29,7 @@ public class FreeBlockBuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Construção Infinita";
+        return "Infinite Architecture";
     }
 
     @Override
@@ -67,8 +67,8 @@ public class FreeBlockBuff implements ID20ActionEvent {
                 pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                 15, 0.3, 0.3, 0.3, 0.05);
 
-        player.sendSystemMessage(Component.literal("§e🧱 [BÊNÇÃO INFINITA] §aConstrução gratuita! O bloco foi reembolsado!"), true);
-        LOGGER.info("[D20/ConstrucaoInfinita] Bloco '{}' reembolsado para {} em [{}, {}, {}].",
+        player.sendSystemMessage(Component.literal("§e🧱 [DIVINE] §aInfinite Architecture! The block was refunded!"), true);
+        LOGGER.info("[D20/InfiniteBlock] Block '{}' refunded to {} at [{}, {}, {}].",
                 block.getName().getString(), player.getScoreboardName(), pos.getX(), pos.getY(), pos.getZ());
         return true;
     }

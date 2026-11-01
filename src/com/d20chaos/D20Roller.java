@@ -17,13 +17,13 @@ public class D20Roller {
     private static final Map<UUID, Integer> FORCED_ROLLS = new ConcurrentHashMap<>();
 
     public enum ResultCategory {
-        NATURAL_1("§4§l💀 NATURAL 1 💀", "Falha Crítica!"),
-        FAIL("§c§l💀 FALHA 💀", "Perda e Desastre!"),
-        POOR("§7Desgaste", "Redução leve"),
+        NATURAL_1("§4§l💀 NATURAL 1 💀", "Critical Failure!"),
+        FAIL("§c§l💀 FAILURE 💀", "Disaster & Hazard!"),
+        POOR("§7Wear", "Mild wear"),
         NORMAL("§fNormal", "Vanilla"),
-        SUCCESS("§aSucesso!", "Drops x2 e XP"),
-        GREAT_SUCCESS("§b★ GRANDE SUCESSO ★", "Drops x4 e Lucky Block!"),
-        NATURAL_20("§6§l★ NATURAL 20 ★", "Jackpot Épico x8 + Lucky Block +100!");
+        SUCCESS("§aSuccess!", "x2 Drops & XP"),
+        GREAT_SUCCESS("§b★ GREAT SUCCESS ★", "x4 Drops & Lucky Block!"),
+        NATURAL_20("§6§l★ NATURAL 20 ★", "Epic Jackpot x8 + Lucky Block +100!");
 
         public final String title;
         public final String description;
@@ -130,27 +130,27 @@ public class D20Roller {
         // Pop-up Banner and Totem Screen Animations!
         switch (category) {
             case NATURAL_20:
-                TitleHelper.sendTitle(player, Component.literal("§6§l★ NATURAL 20 ★"), Component.literal("§eJackpot Épico x8 + Lucky Block +100!"));
+                TitleHelper.sendTitle(player, Component.literal("§6§l★ NATURAL 20 ★"), Component.literal("§eEpic Jackpot x8 + Lucky Block +100!"));
                 TitleHelper.triggerTotemAnimation(new ItemStack(ModItems.D20_NAT20.get()));
                 player.serverLevel().sendParticles(ParticleTypes.TOTEM_OF_UNDYING, player.getX(), player.getY() + 1.0, player.getZ(), 40, 0.5, 0.5, 0.5, 0.2);
                 player.serverLevel().sendParticles(ParticleTypes.HAPPY_VILLAGER, player.getX(), player.getY() + 1.0, player.getZ(), 20, 0.5, 0.5, 0.5, 0.1);
                 break;
 
             case NATURAL_1:
-                TitleHelper.sendTitle(player, Component.literal("§4§l💀 NATURAL 1 💀"), Component.literal("§cCampo de Força do Julgamento!"));
+                TitleHelper.sendTitle(player, Component.literal("§4§l💀 NATURAL 1 💀"), Component.literal("§cForcefield of Judgment!"));
                 TitleHelper.triggerTotemAnimation(new ItemStack(ModItems.D20_NAT1.get()));
                 player.serverLevel().sendParticles(ParticleTypes.WITCH, player.getX(), player.getY() + 1.0, player.getZ(), 35, 0.5, 0.5, 0.5, 0.1);
                 player.serverLevel().sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX(), player.getY() + 1.0, player.getZ(), 25, 0.5, 0.5, 0.5, 0.05);
                 break;
 
             case GREAT_SUCCESS:
-                TitleHelper.sendTitle(player, Component.literal("§b§l★ CRITICAL " + total + " ★"), Component.literal("§bGrande Sucesso!"));
+                TitleHelper.sendTitle(player, Component.literal("§b§l★ CRITICAL " + total + " ★"), Component.literal("§bGreat Success!"));
                 TitleHelper.triggerTotemAnimation(new ItemStack(ModItems.D20_CRIT.get()));
                 player.serverLevel().sendParticles(ParticleTypes.ENCHANT, player.getX(), player.getY() + 1.0, player.getZ(), 30, 0.5, 0.5, 0.5, 0.2);
                 break;
 
             case FAIL:
-                TitleHelper.sendTitle(player, Component.literal("§c§l💀 CRITICAL " + total + " 💀"), Component.literal("§cPerda de Recursos!"));
+                TitleHelper.sendTitle(player, Component.literal("§c§l💀 CRITICAL " + total + " 💀"), Component.literal("§cResource Loss!"));
                 break;
 
             default:

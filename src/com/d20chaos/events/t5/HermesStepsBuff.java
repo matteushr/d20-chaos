@@ -26,7 +26,7 @@ public class HermesStepsBuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Passos de Hermes";
+        return "Hermes Steps";
     }
 
     @Override
@@ -54,8 +54,8 @@ public class HermesStepsBuff implements ID20ActionEvent {
         level.sendParticles(ParticleTypes.GLOW, player.getX(), player.getY() + 0.2, player.getZ(),
                 25, 0.4, 0.1, 0.4, 0.05);
 
-        player.sendSystemMessage(Component.literal("§6⚡ [MODO DEUS] §ePASSOS DE HERMES! Velocidade e leveza divinas ativadas!"), true);
-        LOGGER.info("[D20/Hermes] Passos de Hermes concedidos a {} (Speed II e Jump Boost I por 15s).", player.getScoreboardName());
+        player.sendSystemMessage(Component.literal("§6⚡ [DIVINE] §eHERMES STEPS! Divine speed and agility granted!"), true);
+        LOGGER.info("[D20/Hermes] Hermes Steps granted to {} (Speed II and Jump Boost I for 15s).", player.getScoreboardName());
         return true;
     }
 }

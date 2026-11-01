@@ -30,7 +30,7 @@ public class InescapableAnvilTrap implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Bigorna Inescapável";
+        return "Inescapable Anvil";
     }
 
     @Override
@@ -62,22 +62,21 @@ public class InescapableAnvilTrap implements ID20ActionEvent {
         PlayerConstraintHelper.applyJumpLock(player, 25);
 
         // 3. Spawn falling DAMAGED ANVIL directly above the player's head (4 blocks up)
-        // Note: FallingBlockEntity.fall() ALREADY calls level.addFreshEntity() internally
         BlockPos spawnPos = playerBlock.above(4);
         FallingBlockEntity anvil = FallingBlockEntity.fall(level, spawnPos, Blocks.DAMAGED_ANVIL.defaultBlockState());
 
         if (anvil != null) {
             anvil.setPos(targetX, spawnPos.getY(), targetZ);
-            anvil.setHurtsEntities(2.5f, 40); // Deals crushing damage on contact
-            anvil.disableDrop(); // cancelDrop = true: deals damage, plays destroy sound, shatters without leaving a block
-            anvil.setDeltaMovement(0, -0.35, 0); // initial downward velocity for immediate drop
+            anvil.setHurtsEntities(2.5f, 40); // Crushing contact damage
+            anvil.disableDrop(); // Shatters without dropping block
+            anvil.setDeltaMovement(0, -0.35, 0); // Immediate downward velocity
         }
 
         level.playSound(null, targetX, player.getY(), targetZ,
                 SoundEvents.CHAIN_FALL, SoundSource.PLAYERS, 1.0f, 0.8f);
 
-        player.sendSystemMessage(Component.literal("§4⛓ [MALDIÇÃO] §cCorrentes prenderam seus pés! Cuidado com a bigorna!"), true);
-        LOGGER.info("[D20/Bigorna] Bigorna danificada gerada em [{}, {}, {}] sobre o jogador {}.",
+        player.sendSystemMessage(Component.literal("§4⛓ [CALAMITY] §cChains bind your feet! Look out above!"), true);
+        LOGGER.info("[D20/Anvil] Damaged anvil dropped at [{}, {}, {}] onto player {}.",
                 targetX, spawnPos.getY(), targetZ, player.getScoreboardName());
         return true;
     }

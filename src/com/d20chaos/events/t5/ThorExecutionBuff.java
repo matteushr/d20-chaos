@@ -28,7 +28,7 @@ public class ThorExecutionBuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Ira de Thor";
+        return "Thor Execution";
     }
 
     @Override
@@ -69,8 +69,8 @@ public class ThorExecutionBuff implements ID20ActionEvent {
                 strikeTarget.getX(), strikeTarget.getY() + 1.0, strikeTarget.getZ(),
                 30, 0.5, 0.5, 0.5, 0.1);
 
-        player.sendSystemMessage(Component.literal("§e⚡ [IRA DE THOR] §bRelâmpago divino aniquilou seu alvo!"), true);
-        LOGGER.info("[D20/Thor] Raio de Thor invocado por {} contra '{}' (+12.0 dano de raio).",
+        player.sendSystemMessage(Component.literal("§e⚡ [THOR'S WRATH] §bDivine lightning struck down your target!"), true);
+        LOGGER.info("[D20/Thor] Thor lightning invoked by {} against '{}' (+12.0 lightning damage).",
                 player.getScoreboardName(), strikeTarget.getName().getString());
         return true;
     }

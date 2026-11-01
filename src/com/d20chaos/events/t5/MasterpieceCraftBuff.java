@@ -25,7 +25,7 @@ public class MasterpieceCraftBuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Obra-Prima";
+        return "Masterpiece";
     }
 
     @Override
@@ -53,8 +53,8 @@ public class MasterpieceCraftBuff implements ID20ActionEvent {
                 player.getX(), player.getY() + 1.0, player.getZ(),
                 20, 0.4, 0.4, 0.4, 0.1);
 
-        player.sendSystemMessage(Component.literal("§e🔨 [OBRA-PRIMA] §aCriação magistral! Você recebeu +30 XP de maestria!"), true);
-        LOGGER.info("[D20/ObraPrima] Concedido +30 XP de maestria a {} por fabricação.", player.getScoreboardName());
+        player.sendSystemMessage(Component.literal("§e🔨 [MASTERPIECE] §aMagical creation! You received +30 mastery XP!"), true);
+        LOGGER.info("[D20/Masterpiece] Granted +30 mastery XP to {} for crafting.", player.getScoreboardName());
         return true;
     }
 }

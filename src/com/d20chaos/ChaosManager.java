@@ -56,7 +56,7 @@ public class ChaosManager {
 
         ServerBossEvent bar = BOSS_BARS.computeIfAbsent(uuid, id -> {
             ServerBossEvent newBar = new ServerBossEvent(
-                Component.literal("§6🎲 Chaos: 0% §e(Normal) §7| +5% em 5 rolagens"),
+                Component.literal("§6🎲 Chaos: 0% §e(Normal) §7| +5% in 5 rolls"),
                 BossBarColor.YELLOW,
                 BossBarOverlay.NOTCHED_20
             );
@@ -65,7 +65,7 @@ public class ChaosManager {
         });
 
         bar.setProgress(chaos / 100.0f);
-        bar.setName(Component.literal("§6🎲 Chaos: §f" + chaos + "% " + tierColor + "(" + tierName + ") §7| +5% em " + rollsLeft + " rolagens"));
+        bar.setName(Component.literal("§6🎲 Chaos: §f" + chaos + "% " + tierColor + "(" + tierName + ") §7| +5% in " + rollsLeft + " rolls"));
 
         // Update BossBar color by Tier
         if (chaos < 30) {
@@ -98,7 +98,7 @@ public class ChaosManager {
                 TitleHelper.sendTitle(
                     player,
                     Component.literal(color + "§l" + newTier.toUpperCase() + " MODE"),
-                    Component.literal("§7Chaos " + next + "%: os dados estão ficando mais selvagens...")
+                    Component.literal("§7Chaos " + next + "%: the dice are growing wilder...")
                 );
                 player.serverLevel().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDER_DRAGON_GROWL, SoundSource.PLAYERS, 0.8f, 1.2f);
             }
@@ -116,8 +116,8 @@ public class ChaosManager {
     private static void triggerCalamity(ServerPlayer player) {
         TitleHelper.sendTitle(
             player,
-            Component.literal("§4§l⚡ CALAMIDADE! ⚡"),
-            Component.literal("§cO Caos atingiu 100%! A Ira dos Deuses se aproxima...")
+            Component.literal("§4§l⚡ CALAMITY! ⚡"),
+            Component.literal("§cChaos reached 100%! The Wrath of the Gods is upon you...")
         );
         player.serverLevel().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.WEATHER, 1.0f, 0.7f);
         player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 120, 0, false, false));

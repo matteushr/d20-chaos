@@ -27,7 +27,7 @@ public class UnstableGravityTrap implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Gravidade Instável";
+        return "Unstable Gravity";
     }
 
     @Override
@@ -52,13 +52,13 @@ public class UnstableGravityTrap implements ID20ActionEvent {
 
         // Remove the block and convert it to a falling physics block
         level.removeBlock(pos, false);
-        FallingBlockEntity falling = FallingBlockEntity.fall(level, pos, state);
+        FallingBlockEntity.fall(level, pos, state);
 
         level.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
                 SoundEvents.GRAVEL_FALL, SoundSource.BLOCKS, 1.0f, 0.8f);
 
-        player.sendSystemMessage(Component.literal("§4⚠️ [MALDIÇÃO] §cO bloco perdeu a sustentação e despencou no ar!"), true);
-        LOGGER.info("[D20/GravidadeInstavel] Bloco '{}' em [{}, {}, {}] colocado por {} desabou no ar.",
+        player.sendSystemMessage(Component.literal("§4⚠ [CALAMITY] §cThe placed block lost physical support and fell!"), true);
+        LOGGER.info("[D20/UnstableGravity] Block '{}' at [{}, {}, {}] placed by {} collapsed into falling entity.",
                 state.getBlock().getName().getString(), pos.getX(), pos.getY(), pos.getZ(), player.getScoreboardName());
         return true;
     }

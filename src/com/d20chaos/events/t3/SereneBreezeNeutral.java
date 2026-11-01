@@ -24,7 +24,7 @@ public class SereneBreezeNeutral implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Brisa Serena";
+        return "Serene Breeze";
     }
 
     @Override
@@ -43,15 +43,15 @@ public class SereneBreezeNeutral implements ID20ActionEvent {
         ServerLevel level = ctx.level();
         if (player == null || level == null) return false;
 
-        // Efeito puramente cosmético e de alívio: partículas brancas de pó estelar e sino tranquilo
+        // Purely cosmetic relief effect: white end rod particles and gentle chime
         level.sendParticles(ParticleTypes.END_ROD, player.getX(), player.getY() + 1.0, player.getZ(),
                 20, 0.5, 0.5, 0.5, 0.03);
 
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.AMBIENT, 1.0f, 1.2f);
 
-        player.sendSystemMessage(Component.literal("§f★ [NEUTRO] §7Uma brisa serena sopra... O mundo está em perfeito equilíbrio."), true);
-        LOGGER.info("[D20/BrisaSerena] Zona neutra confirmada para {} em [{}, {}, {}].",
+        player.sendSystemMessage(Component.literal("§f★ [NEUTRAL] §7A serene breeze blows... The world is in perfect balance."), true);
+        LOGGER.info("[D20/SereneBreeze] Neutral zone confirmed for {} at [{}, {}, {}].",
                 player.getScoreboardName(), (int)player.getX(), (int)player.getY(), (int)player.getZ());
         return true;
     }

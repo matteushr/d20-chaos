@@ -29,7 +29,7 @@ public class ArchitectBuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Arquiteto";
+        return "Architect";
     }
 
     @Override
@@ -52,13 +52,13 @@ public class ArchitectBuff implements ID20ActionEvent {
         BlockState state = level.getBlockState(pos);
         if (state.isAir()) return false;
 
-        // Reembolso do bloco: adiciona o item de volta ao inventário
+        // Block refund: adds item back to player inventory
         ItemStack refund = new ItemStack(state.getBlock().asItem(), 1);
         if (!refund.isEmpty()) {
             player.getInventory().add(refund);
         }
 
-        // Concede Resistência I por 15 segundos
+        // Grants Resistance I for 15 seconds
         player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 300, 0, false, true));
 
         level.sendParticles(ParticleTypes.WAX_ON, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
@@ -67,8 +67,8 @@ public class ArchitectBuff implements ID20ActionEvent {
         level.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
                 SoundEvents.CHICKEN_EGG, SoundSource.BLOCKS, 1.0f, 1.4f);
 
-        player.sendSystemMessage(Component.literal("§a★ [BÊNÇÃO] §2Engenho do Arquiteto! Bloco reembolsado e Resistência ativada."), true);
-        LOGGER.info("[D20/Arquiteto] Bloco '{}' reembolsado para {} em [{}, {}, {}].",
+        player.sendSystemMessage(Component.literal("§a★ [BLESSING] §2Architect's Ingenuity! Block refunded and Resistance granted."), true);
+        LOGGER.info("[D20/Architect] Block '{}' refunded for {} at [{}, {}, {}].",
                 state.getBlock().getName().getString(), player.getScoreboardName(), pos.getX(), pos.getY(), pos.getZ());
         return true;
     }

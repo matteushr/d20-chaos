@@ -27,7 +27,7 @@ public class StumbleDebuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Tropeço";
+        return "Stumble";
     }
 
     @Override
@@ -46,23 +46,23 @@ public class StumbleDebuff implements ID20ActionEvent {
         ServerLevel level = ctx.level();
         if (player == null || level == null) return false;
 
-        // Tropeço físico: impulso súbito para frente/lado com perda de equilíbrio
+        // Physical stumble: sudden forward impulse with loss of balance
         Vec3 look = player.getLookAngle();
         player.setDeltaMovement(look.x * 0.4, 0.05, look.z * 0.4);
         player.hurtMarked = true;
 
-        // Aplica Lentidão I por 5 segundos (100 ticks)
+        // Apply Slowness I for 5 seconds (100 ticks)
         player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 0, false, true));
 
-        // Partículas de poeira nos pés
+        // Dust particles at player feet
         level.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, player.getX(), player.getY(), player.getZ(),
                 12, 0.3, 0.1, 0.3, 0.02);
 
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.PLAYER_HURT_SWEET_BERRY_BUSH, SoundSource.PLAYERS, 1.0f, 0.9f);
 
-        player.sendSystemMessage(Component.literal("§6⚠ [PENALIDADE] §eVocê tropeçou no próprio passo! Lentidão temporária."), true);
-        LOGGER.info("[D20/Tropeco] {} tropeçou na locomoção em [{}, {}, {}].",
+        player.sendSystemMessage(Component.literal("§6⚠ [PENALTY] §eYou tripped over your own feet! Temporary slowness applied."), true);
+        LOGGER.info("[D20/Stumble] {} stumbled during movement at [{}, {}, {}].",
                 player.getScoreboardName(), (int)player.getX(), (int)player.getY(), (int)player.getZ());
         return true;
     }

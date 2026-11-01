@@ -18,12 +18,12 @@ public class D20SlotHudOverlay {
     private static final ResourceLocation D20_T5 = ResourceLocation.fromNamespaceAndPath(D20Chaos.MOD_ID, "textures/gui/d20_tier5.png");
 
     // =========================================================================
-    // TIPOGRAFIA PIXEL ART AUTÊNTICA (3x5 DIGITS) - CÓPIA EXATA DA ARTE ORIGINAL
+    // AUTHENTIC PIXEL ART MICRO-FONT (3x5 DIGITS) - MATCHING ORIGINAL ART
     // =========================================================================
     private static final byte[][] DIGIT_GLYPHS = {
         // 0 (3x5)
         { 1,1,1,  1,0,1,  1,0,1,  1,0,1,  1,1,1 },
-        // 1 (2x5) - Esguio e elegante, exatamente como no 16 original
+        // 1 (2x5) - Slender and clean, identical to original art
         { 1,1,    0,1,    0,1,    0,1,    1,1 },
         // 2 (3x5)
         { 1,1,1,  0,0,1,  1,1,1,  1,0,0,  1,1,1 },
@@ -44,18 +44,18 @@ public class D20SlotHudOverlay {
     };
     private static final int[] DIGIT_WIDTHS = { 3, 2, 3, 3, 3, 3, 3, 3, 3, 3 };
 
-    // Partículas ancoradas ao redor do dado: [relX, relY, formato (0=Cruz, 1=Quadrado, 2=Ponto), secundária (0/1), fase]
+    // Anchored surrounding orbital particles: [relX, relY, shape (0=Cross, 1=Square, 2=Dot), isSecondary (0/1), phase]
     private static final float[][] ANCHOR_PARTICLES = {
-        { -4f,   6f, 0f, 1f, 0.0f }, // Cruz roxa esquerda
-        { -3f,  20f, 1f, 0f, 1.2f }, // Quadrado dourado inferior-esquerdo
-        {  4f,  -4f, 2f, 0f, 2.5f }, // Ponto dourado superior
-        { 16f,  -6f, 1f, 0f, 0.7f }, // Quadrado dourado topo
-        { 28f,  -3f, 0f, 0f, 3.1f }, // Cruz dourada superior-direita
-        { 34f,   8f, 2f, 1f, 1.9f }, // Ponto roxo direita
-        { 32f,  22f, 1f, 0f, 0.4f }, // Quadrado dourado inferior-direito
-        { 22f,  32f, 0f, 1f, 2.8f }, // Cruz roxa base
-        {  8f,  31f, 2f, 1f, 1.5f }, // Ponto roxo inferior
-        { -5f,  13f, 2f, 0f, 3.8f }  // Ponto dourado esquerda
+        { -4f,   6f, 0f, 1f, 0.0f }, // Left purple cross
+        { -3f,  20f, 1f, 0f, 1.2f }, // Bottom-left gold square
+        {  4f,  -4f, 2f, 0f, 2.5f }, // Top gold dot
+        { 16f,  -6f, 1f, 0f, 0.7f }, // Top-center gold square
+        { 28f,  -3f, 0f, 0f, 3.1f }, // Top-right gold cross
+        { 34f,   8f, 2f, 1f, 1.9f }, // Right purple dot
+        { 32f,  22f, 1f, 0f, 0.4f }, // Bottom-right gold square
+        { 22f,  32f, 0f, 1f, 2.8f }, // Bottom purple cross
+        {  8f,  31f, 2f, 1f, 1.5f }, // Bottom purple dot
+        { -5f,  13f, 2f, 0f, 3.8f }  // Left gold dot
     };
 
     public static void registerGuiLayers(RegisterGuiLayersEvent event) {
@@ -69,7 +69,7 @@ public class D20SlotHudOverlay {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.options.hideGui) return;
 
-        // Estado sincronizado do D20
+        // Synchronized D20 state
         DiceTier tier = ClientD20State.getCurrentTier();
         int ticksRemaining = ClientD20State.getTicksRemaining();
         int minutes = (ticksRemaining / 20) / 60;
@@ -87,7 +87,7 @@ public class D20SlotHudOverlay {
         int screenHeight = graphics.guiHeight();
 
         // =========================================================================
-        // 1. CARDS NO CANTO SUPERIOR ESQUERDO
+        // 1. TOP-LEFT ACTION CARDS
         // =========================================================================
         int startX = 10;
         int startY = 10;
@@ -95,39 +95,39 @@ public class D20SlotHudOverlay {
         int cardHeight = 15;
         int gap = 2;
 
-        // 1.1 Banner Superior da Tier
+        // 1.1 Tier Status Header Banner
         graphics.fill(startX, startY, startX + panelWidth, startY + 24, 0xAA000000);
         graphics.renderOutline(startX, startY, panelWidth, 24, tierColor);
 
-        // Linha 1: Nome da Tier + Tempo
+        // Line 1: Tier Title + Remaining Timer
         String tierTitle = tier.getTitle();
         graphics.drawString(mc.font, "§6§l" + tierTitle, startX + 5, startY + 4, 0xFFFFFFFF, true);
         String timerStr = String.format("§e%02d:%02d", minutes, seconds);
         graphics.drawString(mc.font, timerStr, startX + panelWidth - mc.font.width(timerStr) - 5, startY + 4, 0xFFFFFFFF, true);
 
-        // Linha 2: Caos + Taxa de Gatilho
-        String subInfo = String.format("§7Caos: §c%d%% §8| §7Gatilho: §e%.0f%%", chaos, chance * 100);
+        // Line 2: Chaos + Trigger Chance
+        String subInfo = String.format("§7Chaos: §c%d%% §8| §7Trigger: §e%.0f%%", chaos, chance * 100);
         graphics.drawString(mc.font, subInfo, startX + 5, startY + 14, 0xFFAAAAAA, true);
 
-        // 1.2 Cards Individuais para Cada Ação Essencial
+        // 1.2 Individual Action Cards
         int currentY = startY + 27;
 
-        renderActionCard(graphics, mc, startX, currentY, panelWidth, cardHeight, "Mineração", tier.getArchetype(ActionCategory.MINING));
+        renderActionCard(graphics, mc, startX, currentY, panelWidth, cardHeight, "Mining", tier.getArchetype(ActionCategory.MINING));
         currentY += cardHeight + gap;
 
-        renderActionCard(graphics, mc, startX, currentY, panelWidth, cardHeight, "Locomoção", tier.getArchetype(ActionCategory.MOVEMENT));
+        renderActionCard(graphics, mc, startX, currentY, panelWidth, cardHeight, "Movement", tier.getArchetype(ActionCategory.MOVEMENT));
         currentY += cardHeight + gap;
 
-        renderActionCard(graphics, mc, startX, currentY, panelWidth, cardHeight, "Construção", tier.getArchetype(ActionCategory.BLOCK_PLACE));
+        renderActionCard(graphics, mc, startX, currentY, panelWidth, cardHeight, "Building", tier.getArchetype(ActionCategory.BLOCK_PLACE));
         currentY += cardHeight + gap;
 
-        renderActionCard(graphics, mc, startX, currentY, panelWidth, cardHeight, "Combate", tier.getArchetype(ActionCategory.COMBAT_EXPLORE));
+        renderActionCard(graphics, mc, startX, currentY, panelWidth, cardHeight, "Combat", tier.getArchetype(ActionCategory.COMBAT_EXPLORE));
         currentY += cardHeight + gap;
 
-        renderActionCard(graphics, mc, startX, currentY, panelWidth, cardHeight, "Fabricação", tier.getArchetype(ActionCategory.CRAFTING));
+        renderActionCard(graphics, mc, startX, currentY, panelWidth, cardHeight, "Crafting", tier.getArchetype(ActionCategory.CRAFTING));
         currentY += cardHeight + gap;
 
-        // 1.3 Card do Último Gatilho (4%)
+        // 1.3 Last Trigger Card (4%)
         int lastBg = highlight ? 0xCC553300 : 0x55000000;
         int lastBorder = highlight ? 0xFFFFEE55 : 0x22FFFFFF;
         graphics.fill(startX, currentY, startX + panelWidth, currentY + cardHeight, lastBg);
@@ -135,22 +135,22 @@ public class D20SlotHudOverlay {
 
         String lastText;
         if (highlight) {
-            lastText = "§e★ GATILHO: §a" + lastEvent;
+            lastText = "§e★ TRIGGER: §a" + lastEvent;
         } else if (lastEvent.equals("none")) {
-            lastText = "§8Último: Aguardando...";
+            lastText = "§8Last: Waiting...";
         } else {
-            lastText = "§7Último: §f" + lastEvent;
+            lastText = "§7Last: §f" + lastEvent;
         }
         graphics.drawString(mc.font, lastText, startX + 5, currentY + 4, 0xFFFFFFFF, true);
 
         // =========================================================================
-        // 2. DADO D20 PIXEL-PERFECT (32x32 NATIVO 1:1) COM TIPOGRAFIA DA ARTE ORIGINAL
+        // 2. PIXEL-PERFECT D20 DIE (32x32 NATIVE 1:1) WITH AUTHENTIC TYPOGRAPHY
         // =========================================================================
         int d20Size = 32;
         int d20X = (screenWidth - d20Size) / 2;
-        int d20Y = screenHeight - 78; // Flutua perfeitamente acima da vida e da fome
+        int d20Y = screenHeight - 78; // Floats cleanly above health & hunger
 
-        // Textura base 32x32 nítida 1:1
+        // Base 32x32 texture according to active tier
         ResourceLocation d20Texture = switch (tier) {
             case TIER_1_CURSE -> D20_T1;
             case TIER_2_DEBUFF -> D20_T2;
@@ -159,18 +159,18 @@ public class D20SlotHudOverlay {
             case TIER_5_DIVINE -> D20_T5;
         };
 
-        // Renderiza partículas orgânicas da arte de referência (Cruzes, estrelas e poeira estelar)
+        // Render ambient celestial particles around die
         renderSurroundingEffects(graphics, tier, d20X, d20Y, highlightProgress);
 
-        // Renderiza o dado D20 em amostragem nativa 1:1 (ZERO distorção, contorno limpo)
+        // Render D20 die with exact 1:1 texel-to-pixel mapping
         graphics.blit(d20Texture, d20X, d20Y, 32, 32, 0.0f, 0.0f, 32, 32, 32, 32);
 
-        // Renderiza o número estampado com a micro-fonte pixel art exata da arte de referência
+        // Render number centered inside the inverted triangular face
         if (rolledNum > 0) {
             renderPixelArtNumber(graphics, rolledNum, d20X, d20Y, highlight);
         }
 
-        // Mini toast flutuante estilizado acima do D20 ao acionar micro-rolagem de 4%
+        // Floating toast badge above D20 upon 4% micro-roll trigger
         if (highlight && lastEvent != null && !lastEvent.equals("none")) {
             String toast = "§e★ " + lastEvent;
             int toastWidth = mc.font.width(toast);
@@ -194,7 +194,7 @@ public class D20SlotHudOverlay {
     }
 
     // =========================================================================
-    // 3. ESTAMPARIA DO NÚMERO EM MICRO-FONTE PIXEL ART (100% FIEL AO ORIGINAL)
+    // 3. NUMBER RENDERING IN MICRO PIXEL ART (100% FAITHFUL TO ORIGINAL ART)
     // =========================================================================
     private static void renderPixelArtNumber(GuiGraphics graphics, int rolledNum, int d20X, int d20Y, boolean highlight) {
         String numStr = String.valueOf(rolledNum);
@@ -205,24 +205,24 @@ public class D20SlotHudOverlay {
                 totalWidth += DIGIT_WIDTHS[d];
             }
         }
-        totalWidth += (numStr.length() - 1); // 1 pixel de espaçamento entre dígitos
+        totalWidth += (numStr.length() - 1); // 1 pixel gap between digits
 
-        // Centro exato da face triangular invertida na textura 32x32
+        // Exact facet center in 32x32 texture
         int startX = d20X + 18 - totalWidth / 2;
         int startY = d20Y + 15;
 
-        // Cores da arte original: Lilás/Branco (#BEAAC3) com sombra profunda
+        // Palette from original reference art: Lilac-white (#BEAAC3) with deep shadow
         int textColor;
         int shadowColor = 0xCC110419;
 
         if (highlight) {
-            textColor = 0xFFFFEE55; // Ouro no momento do gatilho
+            textColor = 0xFFFFEE55; // Shimmering Gold on trigger
         } else if (rolledNum == 20) {
-            textColor = 0xFFFFD700; // Ouro Divino Nat 20
+            textColor = 0xFFFFD700; // Epic Divine Gold (Nat 20)
         } else if (rolledNum == 1) {
-            textColor = 0xFFFF4444; // Vermelho Sangue Nat 1
+            textColor = 0xFFFF4444; // Crimson Blood Red (Nat 1)
         } else {
-            textColor = 0xFFBEAAC3; // Lilás estelar idêntico à arte de referência!
+            textColor = 0xFFBEAAC3; // Stellar lilac-white from reference art!
         }
 
         int curX = startX;
@@ -237,9 +237,9 @@ public class D20SlotHudOverlay {
                     if (glyph[r * gw + c] == 1) {
                         int px = curX + c;
                         int py = startY + r;
-                        // Sombra sutil de 1 pixel abaixo
+                        // 1-pixel subtle drop shadow
                         graphics.fill(px, py + 1, px + 1, py + 2, shadowColor);
-                        // Pixel da fonte
+                        // Font pixel
                         graphics.fill(px, py, px + 1, py + 1, textColor);
                     }
                 }
@@ -249,7 +249,7 @@ public class D20SlotHudOverlay {
     }
 
     // =========================================================================
-    // 4. EFEITOS VISUAIS PROCEDURAIS VIVOS (CRUZES, POEIRA ESTELAR E AURA)
+    // 4. LIVING CELESTIAL PARTICLE EFFECTS (CROSSES, STARDUST & NOVA BURST)
     // =========================================================================
     private static void renderSurroundingEffects(GuiGraphics graphics, DiceTier tier, int d20X, int d20Y, float highlightProgress) {
         long now = System.currentTimeMillis();
@@ -262,7 +262,7 @@ public class D20SlotHudOverlay {
         int centerX = d20X + 16;
         int centerY = d20Y + 16;
 
-        // 4.1 Explosão radial em 8 direções ao acionar gatilho
+        // 4.1 Radial starburst in 8 directions on 4% trigger highlight
         if (highlight) {
             int auraAlpha = (int) (highlightProgress * 70);
             int auraColor = (auraAlpha << 24) | (tier.getColorRgb() & 0x00FFFFFF);
@@ -279,7 +279,7 @@ public class D20SlotHudOverlay {
             }
         }
 
-        // 4.2 Partículas orgânicas ancoradas com leve flutuação (breathing)
+        // 4.2 Anchored particles with subtle organic breathing motion (±1px)
         for (float[] def : ANCHOR_PARTICLES) {
             float baseRelX = def[0];
             float baseRelY = def[1];
@@ -287,7 +287,6 @@ public class D20SlotHudOverlay {
             boolean isSec = def[3] > 0.5f;
             float phase = def[4];
 
-            // Flutuação suave de ±1 pixel
             int wobbleY = (int) Math.round(Math.sin(timeSec * 1.8 + phase));
             int wobbleX = (int) Math.round(Math.cos(timeSec * 1.2 + phase));
 
@@ -296,9 +295,11 @@ public class D20SlotHudOverlay {
 
             int baseColor = isSec ? secondaryColor : primaryColor;
 
-            // Cintilação orgânica suave
             double pulse = 0.75 + 0.25 * Math.sin(timeSec * 2.2 + phase);
             int alpha = (int) Math.round(255 * pulse);
+            if (highlight) {
+                alpha = Math.min(255, (int) (alpha * 1.2));
+            }
             int finalColor = (alpha << 24) | (baseColor & 0x00FFFFFF);
 
             if (shapeType == 0) {
@@ -313,25 +314,25 @@ public class D20SlotHudOverlay {
 
     private static int getParticlePrimaryColor(DiceTier tier) {
         return switch (tier) {
-            case TIER_1_CURSE   -> 0xFFFF2233; // Carmesim Sombrio
-            case TIER_2_DEBUFF  -> 0xFFFF7700; // Laranja Ferrugem
-            case TIER_3_NEUTRAL -> 0xFFE0E8FF; // Prata Estelar
-            case TIER_4_BUFF    -> 0xFF22FF66; // Esmeralda Radiante
-            case TIER_5_DIVINE  -> 0xFFFFD700; // Ouro Imperial (Fiel à arte)
+            case TIER_1_CURSE   -> 0xFFFF2233; // Dark Crimson
+            case TIER_2_DEBUFF  -> 0xFFFF7700; // Rust Orange
+            case TIER_3_NEUTRAL -> 0xFFE0E8FF; // Starlight Silver
+            case TIER_4_BUFF    -> 0xFF22FF66; // Radiant Emerald
+            case TIER_5_DIVINE  -> 0xFFFFD700; // Imperial Gold (From reference art)
         };
     }
 
     private static int getParticleSecondaryColor(DiceTier tier) {
         return switch (tier) {
-            case TIER_1_CURSE   -> 0xFFFF8800; // Brasa Cúprica
-            case TIER_2_DEBUFF  -> 0xFFEEAA22; // Bronze Queimado
-            case TIER_3_NEUTRAL -> 0xFF77DDFF; // Ciano Diamante
-            case TIER_4_BUFF    -> 0xFF66FFAA; // Menta Celestial
-            case TIER_5_DIVINE  -> 0xFFC740E7; // Roxo Ametista (Fiel à arte)
+            case TIER_1_CURSE   -> 0xFFFF8800; // Cursed Amber
+            case TIER_2_DEBUFF  -> 0xFFEEAA22; // Scorched Bronze
+            case TIER_3_NEUTRAL -> 0xFF77DDFF; // Diamond Cyan
+            case TIER_4_BUFF    -> 0xFF66FFAA; // Celestial Mint
+            case TIER_5_DIVINE  -> 0xFFC740E7; // Royal Amethyst (From reference art)
         };
     }
 
-    // Cruz de pixel art de 5 pixels (+)
+    // 5-pixel pixel art cross (+)
     private static void drawSparkleCross(GuiGraphics graphics, int cx, int cy, int color) {
         graphics.fill(cx, cy, cx + 1, cy + 1, color);
         graphics.fill(cx, cy - 1, cx + 1, cy, color);
@@ -340,12 +341,12 @@ public class D20SlotHudOverlay {
         graphics.fill(cx + 1, cy, cx + 2, cy + 1, color);
     }
 
-    // Bloco quadrado de pixel art de 2x2 pixels
+    // 2x2 pixel art square block
     private static void drawSparkleSquare(GuiGraphics graphics, int cx, int cy, int color) {
         graphics.fill(cx, cy, cx + 2, cy + 2, color);
     }
 
-    // Ponto estelar único de 1x1 pixel
+    // 1x1 single pixel glint
     private static void drawSparkleDot(GuiGraphics graphics, int cx, int cy, int color) {
         graphics.fill(cx, cy, cx + 1, cy + 1, color);
     }

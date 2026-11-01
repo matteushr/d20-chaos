@@ -25,7 +25,7 @@ public class ScrapCraftTrap implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Fabricação Sucata";
+        return "Scrap Craft";
     }
 
     @Override
@@ -55,8 +55,8 @@ public class ScrapCraftTrap implements ID20ActionEvent {
         level.sendParticles(ParticleTypes.SMOKE, player.getX(), player.getY() + 1.0, player.getZ(),
                 20, 0.3, 0.3, 0.3, 0.05);
 
-        player.sendSystemMessage(Component.literal("§4🔨 [MALDIÇÃO] §cOs materiais se esfarelaram e danificaram suas ferramentas!"), true);
-        LOGGER.info("[D20/Sucata] Ferramenta de {} danificada em 15 pontos durante fabricação.", player.getScoreboardName());
+        player.sendSystemMessage(Component.literal("§4🔨 [CALAMITY] §cThe materials crumbled and chipped your equipment!"), true);
+        LOGGER.info("[D20/ScrapCraft] Equipment of {} chipped by 15 durability during crafting.", player.getScoreboardName());
         return true;
     }
 }

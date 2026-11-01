@@ -1,11 +1,11 @@
 package com.d20chaos.api;
 
 public enum DiceTier {
-    TIER_1_CURSE(1, "CALAMIDADE (MALDIÇÃO)", 0xFFFF3333, "§c[Crítico]"),
-    TIER_2_DEBUFF(2, "SABOTAGEM & AZAR", 0xFFFFAA00, "§6[Debuff]"),
-    TIER_3_NEUTRAL(3, "EQUILÍBRIO VANILLA", 0xFFDDDDDD, "§f[Neutro]"),
-    TIER_4_BUFF(4, "VENTOS FAVORÁVEIS", 0xFF55FF55, "§a[Buff]"),
-    TIER_5_DIVINE(5, "MODO DEUS (BÊNÇÃO)", 0xFFFFD700, "§e[Divino]");
+    TIER_1_CURSE(1, "MORTAL CALAMITY", 0xFFFF3333, "§c[Critical]"),
+    TIER_2_DEBUFF(2, "SABOTAGE & HAZARDS", 0xFFFFAA00, "§6[Debuff]"),
+    TIER_3_NEUTRAL(3, "VANILLA EQUILIBRIUM", 0xFFDDDDDD, "§f[Neutral]"),
+    TIER_4_BUFF(4, "FAVORABLE WINDS", 0xFF55FF55, "§a[Buff]"),
+    TIER_5_DIVINE(5, "GOD MODE (DIVINE)", 0xFFFFD700, "§e[Divine]");
 
     private final int level;
     private final String title;
@@ -38,33 +38,33 @@ public enum DiceTier {
     public String getArchetype(ActionCategory category) {
         return switch (this) {
             case TIER_1_CURSE -> switch (category) {
-                case MOVEMENT -> "§cAbismo";
-                case MINING -> "§cDesabamento";
-                case BLOCK_PLACE -> "§cTraidor";
-                case COMBAT_EXPLORE -> "§cEspinhos";
-                case CRAFTING -> "§cSucata";
+                case MOVEMENT -> "§cAnvil";
+                case MINING -> "§cNest";
+                case BLOCK_PLACE -> "§cGravity";
+                case COMBAT_EXPLORE -> "§cThorns";
+                case CRAFTING -> "§cScrap";
             };
             case TIER_2_DEBUFF -> switch (category) {
-                case MOVEMENT -> "§6Tropeço";
-                case MINING -> "§6Gás Tóxico";
-                case BLOCK_PLACE -> "§6Frágil";
-                case COMBAT_EXPLORE -> "§6Guarda Baixa";
-                case CRAFTING -> "§6Desgaste";
+                case MOVEMENT -> "§6Stumble";
+                case MINING -> "§6Toxic Gas";
+                case BLOCK_PLACE -> "§6Brittle";
+                case COMBAT_EXPLORE -> "§6Low Guard";
+                case CRAFTING -> "§6Wear";
             };
             case TIER_3_NEUTRAL -> "§fVanilla";
             case TIER_4_BUFF -> switch (category) {
-                case MOVEMENT -> "§aÍmpeto";
-                case MINING -> "§aVeio Rico";
-                case BLOCK_PLACE -> "§aArquiteto";
-                case COMBAT_EXPLORE -> "§aCaçador";
-                case CRAFTING -> "§aReforçado";
+                case MOVEMENT -> "§aMomentum";
+                case MINING -> "§aRich Vein";
+                case BLOCK_PLACE -> "§aArchitect";
+                case COMBAT_EXPLORE -> "§aHunter";
+                case CRAFTING -> "§aReinforced";
             };
             case TIER_5_DIVINE -> switch (category) {
                 case MOVEMENT -> "§eHermes ★";
                 case MINING -> "§eMidas ★";
-                case BLOCK_PLACE -> "§eInfinita ★";
+                case BLOCK_PLACE -> "§eInfinite ★";
                 case COMBAT_EXPLORE -> "§eThor ★";
-                case CRAFTING -> "§eObra-Prima ★";
+                case CRAFTING -> "§eMasterpiece ★";
             };
         };
     }

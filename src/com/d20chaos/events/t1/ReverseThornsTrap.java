@@ -23,7 +23,7 @@ public class ReverseThornsTrap implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Espinhos Reversos";
+        return "Reverse Thorns";
     }
 
     @Override
@@ -48,8 +48,8 @@ public class ReverseThornsTrap implements ID20ActionEvent {
         ctx.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.THORNS_HIT, SoundSource.PLAYERS, 1.0f, 1.0f);
 
-        player.sendSystemMessage(Component.literal("§4🌵 [MALDIÇÃO] §cESPINHOS REVERSOS! 50% do dano ricocheteou em você!"), true);
-        LOGGER.info("[D20/Espinhos] 3.0 de dano por espinhos refletido contra {} (HP restante: {}/{}).",
+        player.sendSystemMessage(Component.literal("§4🌵 [CALAMITY] §cREVERSE THORNS! 50% of dealt damage bounced back at you!"), true);
+        LOGGER.info("[D20/ReverseThorns] 3.0 thorns damage reflected back to {} (Remaining HP: {}/{}).",
                 player.getScoreboardName(), (int) player.getHealth(), (int) player.getMaxHealth());
         return true;
     }

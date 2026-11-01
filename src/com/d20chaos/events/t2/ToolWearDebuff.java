@@ -26,7 +26,7 @@ public class ToolWearDebuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Desgaste";
+        return "Wear";
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ToolWearDebuff implements ID20ActionEvent {
         ServerLevel level = ctx.level();
         if (player == null || level == null) return false;
 
-        // Desgaste súbito em ferramenta equipada na mão principal ou armadura
+        // Sudden wear on equipped main hand tool or chest armor
         ItemStack item = player.getMainHandItem();
         EquipmentSlot slot = EquipmentSlot.MAINHAND;
         if (item.isEmpty() || !item.isDamageableItem()) {
@@ -63,8 +63,8 @@ public class ToolWearDebuff implements ID20ActionEvent {
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.ANVIL_USE, SoundSource.PLAYERS, 0.8f, 1.4f);
 
-        player.sendSystemMessage(Component.literal("§6⚠ [PENALIDADE] §eA bancada lascou seus instrumentos! Desgaste de equipamento."), true);
-        LOGGER.info("[D20/Desgaste] Equipamento desgastado para {} na fabricação em [{}, {}, {}].",
+        player.sendSystemMessage(Component.literal("§6⚠ [PENALTY] §eWorkstation friction chipped your equipment!"), true);
+        LOGGER.info("[D20/Wear] Equipment chipped for {} during crafting at [{}, {}, {}].",
                 player.getScoreboardName(), (int)player.getX(), (int)player.getY(), (int)player.getZ());
         return true;
     }

@@ -49,7 +49,7 @@ public class ChaosOverlay {
         }
 
         // Text Line 3: Escalation counter (+5% in X rolls)
-        graphics.drawString(mc.font, "§7+5% em " + rollsLeft + " rolagens", x + 6, y + 24, 0xFFAAAAAA, false);
+        graphics.drawString(mc.font, "§7+5% in " + rollsLeft + " rolls", x + 6, y + 24, 0xFFAAAAAA, false);
     }
 
     private static int getBorderColor(int chaos) {

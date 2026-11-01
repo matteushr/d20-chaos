@@ -23,40 +23,40 @@ public class D20EventDispatcher {
     public static void register(ID20ActionEvent event) {
         if (event == null || event.getId() == null) return;
         REGISTRY.put(event.getId().toLowerCase(), event);
-        LOGGER.info("[D20] Módulo registrado: {} [{}] ({})", event.getId(), event.getCategory(), event.getTier());
+        LOGGER.info("[D20] Module registered: {} [{}] ({})", event.getId(), event.getCategory(), event.getTier());
     }
 
     public static boolean forceTriggerById(String eventId, D20EventContext ctx) {
         if (eventId == null) return false;
         ID20ActionEvent event = REGISTRY.get(eventId.toLowerCase());
         if (event != null) {
-            String playerName = ctx.player() != null ? ctx.player().getScoreboardName() : "desconhecido";
-            LOGGER.info("[D20/Forçado] Disparando manualmente módulo '{}' ({}) para {}", eventId, event.getName(), playerName);
+            String playerName = ctx.player() != null ? ctx.player().getScoreboardName() : "unknown";
+            LOGGER.info("[D20/Forced] Manually triggering module '{}' ({}) for {}", eventId, event.getName(), playerName);
             try {
                 boolean success = event.execute(ctx);
                 if (success) {
-                    LOGGER.info("[D20/Forçado] [Sucesso] Módulo '{}' executado com êxito.", eventId);
+                    LOGGER.info("[D20/Forced] [Success] Module '{}' executed successfully.", eventId);
                     if (ctx.player() != null) {
                         PlayerD20Attachment data = ModAttachments.getData(ctx.player());
                         data.setLastEventId(event.getName());
                     }
                 } else {
-                    LOGGER.warn("[D20/Forçado] [Falha] Módulo '{}' retornou false na execução.", eventId);
+                    LOGGER.warn("[D20/Forced] [Failure] Module '{}' returned false upon execution.", eventId);
                 }
                 return success;
             } catch (Throwable t) {
-                LOGGER.error("[D20/Forçado] [Erro Crítico] Exceção ao forçar módulo '{}':", eventId, t);
+                LOGGER.error("[D20/Forced] [Critical Error] Exception while forcing module '{}':", eventId, t);
                 return false;
             }
         }
-        LOGGER.warn("[D20/Forçado] Módulo não encontrado no registro: {}", eventId);
+        LOGGER.warn("[D20/Forced] Module not found in registry: {}", eventId);
         return false;
     }
 
     public static boolean dispatchRandom(ActionCategory category, DiceTier tier, D20EventContext ctx) {
-        String playerName = ctx.player() != null ? ctx.player().getScoreboardName() : "desconhecido";
+        String playerName = ctx.player() != null ? ctx.player().getScoreboardName() : "unknown";
 
-        // Tier 3 is Vanilla Equilibrium (Neutral Zone): executa feedback cosmético neutro se registrado
+        // Tier 3 is Vanilla Equilibrium (Neutral Zone): execute cosmetic neutral feedback if registered
         if (tier == DiceTier.TIER_3_NEUTRAL) {
             ID20ActionEvent neutralEv = REGISTRY.get("neutral_serene_breeze");
             if (neutralEv != null) {
@@ -68,10 +68,10 @@ public class D20EventDispatcher {
                     }
                     return success;
                 } catch (Throwable t) {
-                    LOGGER.error("[D20/Dispatcher] Erro ao executar evento neutro:", t);
+                    LOGGER.error("[D20/Dispatcher] Error executing neutral event:", t);
                 }
             }
-            LOGGER.info("[D20/Dispatcher] Tier 3 Neutro (Vanilla Equilibrium) ativo. Nenhuma ação disparada para {}.", playerName);
+            LOGGER.info("[D20/Dispatcher] Tier 3 Neutral (Vanilla Equilibrium) active. No action triggered for {}.", playerName);
             return false;
         }
 
@@ -83,30 +83,30 @@ public class D20EventDispatcher {
         }
 
         if (matching.isEmpty()) {
-            LOGGER.warn("[D20/Dispatcher] Nenhum módulo registrado para Categoria: {} no Tier: {}", category, tier);
+            LOGGER.warn("[D20/Dispatcher] No module registered for Category: {} at Tier: {}", category, tier);
             return false;
         }
 
         int index = ThreadLocalRandom.current().nextInt(matching.size());
         ID20ActionEvent selected = matching.get(index);
-        LOGGER.info("[D20/Dispatcher] Executando módulo '{}' ({}) para {} na ação {}",
+        LOGGER.info("[D20/Dispatcher] Executing module '{}' ({}) for {} upon action {}",
                 selected.getId(), selected.getName(), playerName, category);
 
         try {
             boolean success = selected.execute(ctx);
             if (success) {
-                LOGGER.info("[D20/Dispatcher] [Sucesso] Módulo '{}' concluído para {}.", selected.getId(), playerName);
+                LOGGER.info("[D20/Dispatcher] [Success] Module '{}' completed for {}.", selected.getId(), playerName);
                 if (ctx.player() != null) {
                     PlayerD20Attachment data = ModAttachments.getData(ctx.player());
                     data.setLastEventId(selected.getName());
                 }
             } else {
-                LOGGER.warn("[D20/Dispatcher] [Falha] Módulo '{}' retornou false (condição inválida ou abortado) para {}.",
+                LOGGER.warn("[D20/Dispatcher] [Failure] Module '{}' returned false (invalid condition or aborted) for {}.",
                         selected.getId(), playerName);
             }
             return success;
         } catch (Throwable t) {
-            LOGGER.error("[D20/Dispatcher] [Erro Crítico] Exceção inesperada ao executar módulo '{}' para {}:",
+            LOGGER.error("[D20/Dispatcher] [Critical Error] Unexpected exception executing module '{}' for {}:",
                     selected.getId(), playerName, t);
             return false;
         }

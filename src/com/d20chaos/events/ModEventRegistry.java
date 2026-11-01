@@ -19,7 +19,7 @@ public class ModEventRegistry {
 
     public static synchronized void init() {
         if (initialized) return;
-        LOGGER.info("[D20/Registry] Registrando catálogo modular de eventos para todos os Tiers...");
+        LOGGER.info("[D20/Registry] Registering modular event catalog across all Tiers...");
 
         // Tier 1: Calamity / Curse Modules (Mortal)
         D20EventDispatcher.register(new InescapableAnvilTrap());
@@ -28,24 +28,24 @@ public class ModEventRegistry {
         D20EventDispatcher.register(new ReverseThornsTrap());
         D20EventDispatcher.register(new ScrapCraftTrap());
 
-        // Tier 2: Debuff / Sabotage Modules (Penalidade)
+        // Tier 2: Debuff / Sabotage Modules (Penalty)
         D20EventDispatcher.register(new StumbleDebuff());
         D20EventDispatcher.register(new ToxicGasDebuff());
         D20EventDispatcher.register(new BrittleBlockDebuff());
         D20EventDispatcher.register(new LoweredGuardDebuff());
         D20EventDispatcher.register(new ToolWearDebuff());
 
-        // Tier 3: Neutral / Vanilla Equilibrium (Zona Neutra)
+        // Tier 3: Neutral / Vanilla Equilibrium (Neutral Zone)
         D20EventDispatcher.register(new SereneBreezeNeutral());
 
-        // Tier 4: Buff / Favorable Winds Modules (Bênção)
+        // Tier 4: Buff / Favorable Winds Modules (Blessing)
         D20EventDispatcher.register(new MomentumBuff());
         D20EventDispatcher.register(new RichVeinBuff());
         D20EventDispatcher.register(new ArchitectBuff());
         D20EventDispatcher.register(new HunterBuff());
         D20EventDispatcher.register(new ReinforcedCraftBuff());
 
-        // Tier 5: Divine / God Mode Modules (Divino)
+        // Tier 5: Divine / God Mode Modules (Divine)
         D20EventDispatcher.register(new HermesStepsBuff());
         D20EventDispatcher.register(new MidasTransmutationBuff());
         D20EventDispatcher.register(new FreeBlockBuff());
@@ -53,7 +53,7 @@ public class ModEventRegistry {
         D20EventDispatcher.register(new MasterpieceCraftBuff());
 
         initialized = true;
-        LOGGER.info("[D20/Registry] Catálogo completo de eventos inicializado com sucesso ({} módulos registrados).",
+        LOGGER.info("[D20/Registry] Complete event catalog successfully initialized ({} modules registered).",
                 D20EventDispatcher.getRegistry().size());
     }
 }

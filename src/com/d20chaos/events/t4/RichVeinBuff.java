@@ -30,7 +30,7 @@ public class RichVeinBuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Veio Rico";
+        return "Rich Vein";
     }
 
     @Override
@@ -52,10 +52,10 @@ public class RichVeinBuff implements ID20ActionEvent {
 
         BlockPos dropPos = pos != null ? pos : player.blockPosition();
 
-        // Concede Pressa II (Haste II) por 20 segundos (400 ticks)
+        // Grants Haste II for 20 seconds (400 ticks)
         player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 400, 1, false, true));
 
-        // Drop bônus mineral
+        // Bonus mineral drop
         ItemEntity bonus = new ItemEntity(level, dropPos.getX() + 0.5, dropPos.getY() + 0.5, dropPos.getZ() + 0.5,
                 new ItemStack(Items.RAW_IRON, 2));
         level.addFreshEntity(bonus);
@@ -66,8 +66,8 @@ public class RichVeinBuff implements ID20ActionEvent {
         level.playSound(null, dropPos.getX(), dropPos.getY(), dropPos.getZ(),
                 SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.8f, 1.5f);
 
-        player.sendSystemMessage(Component.literal("§a★ [BÊNÇÃO] §2Veio Rico revelado! Pressa II ativa e minérios bônus."), true);
-        LOGGER.info("[D20/VeioRico] Pressa II e minérios concedidos a {} em [{}, {}, {}].",
+        player.sendSystemMessage(Component.literal("§a★ [BLESSING] §2Rich Vein revealed! Haste II active and bonus minerals."), true);
+        LOGGER.info("[D20/RichVein] Haste II and bonus ore granted to {} at [{}, {}, {}].",
                 player.getScoreboardName(), dropPos.getX(), dropPos.getY(), dropPos.getZ());
         return true;
     }

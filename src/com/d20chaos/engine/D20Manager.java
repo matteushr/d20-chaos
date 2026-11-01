@@ -38,7 +38,7 @@ public class D20Manager {
 
     public static void setTriggerChance(float chance) {
         triggerChance = Math.max(0.0f, Math.min(1.0f, chance));
-        LOGGER.info("[D20] Taxa global de gatilho alterada para: {}%", (int) (triggerChance * 100));
+        LOGGER.info("[D20] Global trigger rate set to: {}%", (int) (triggerChance * 100));
     }
 
     public static int getCycleDurationTicks() {
@@ -47,7 +47,7 @@ public class D20Manager {
 
     public static void setCycleDurationTicks(int ticks) {
         cycleDurationTicks = Math.max(20, ticks); // Minimum 1 second (20 ticks)
-        LOGGER.info("[D20] Duração do ciclo alterada para: {} ticks ({}s)", cycleDurationTicks, cycleDurationTicks / 20);
+        LOGGER.info("[D20] Cycle duration set to: {} ticks ({}s)", cycleDurationTicks, cycleDurationTicks / 20);
     }
 
     public static void onServerTick(MinecraftServer server) {
@@ -76,12 +76,12 @@ public class D20Manager {
         data.setLastTriggerTime(System.currentTimeMillis());
         DiceTier tier = DiceTier.fromDecision(decisionRoll);
 
-        LOGGER.info("[D20] Decisão Geral definida para {} ({}) para o jogador {}", decisionRoll, tier.getTitle(), player.getScoreboardName());
+        LOGGER.info("[D20] General Decision set to {} ({}) for player {}", decisionRoll, tier.getTitle(), player.getScoreboardName());
 
         syncToPlayer(player);
 
         if (announce) {
-            String titleText = String.format("§6§l🎲 DECISÃO GERAL: %d", decisionRoll);
+            String titleText = String.format("§6§l🎲 GENERAL DECISION: %d", decisionRoll);
             String subText = String.format("%s §f- %s", tier.getStatusTag(), tier.getTitle());
 
             TitleHelper.sendTitle(player, Component.literal(titleText), Component.literal(subText), 10, 70, 20);
@@ -100,7 +100,7 @@ public class D20Manager {
             }
 
             player.sendSystemMessage(Component.literal(String.format(
-                    "§e[D20] §6Nova Decisão Geral (Ciclo 20min): §f%d §7(%s %s)",
+                    "§e[D20] §6New General Decision (20min cycle): §f%d §7(%s %s)",
                     decisionRoll, tier.getStatusTag(), tier.getTitle()
             )));
         }
@@ -130,7 +130,7 @@ public class D20Manager {
 
         BlockPos actionPos = pos != null ? pos : player.blockPosition();
         String dimension = player.serverLevel().dimension().location().getPath();
-        LOGGER.info("[D20 4% Hit] {} acionou {} em [{}: {}, {}, {}] | MicroRoll: {} | Tier Ativo: {} ({})",
+        LOGGER.info("[D20 4% Hit] {} triggered {} at [{}: {}, {}, {}] | MicroRoll: {} | Active Tier: {} ({})",
                 player.getScoreboardName(), category.name(), dimension,
                 actionPos.getX(), actionPos.getY(), actionPos.getZ(),
                 microRoll, tier.getLevel(), tier.getTitle());
@@ -143,7 +143,7 @@ public class D20Manager {
         // Feedback in Action Bar
         String msg = String.format("§6🎲 [%d] %s §7-> %s",
                 microRoll, category.getDisplayName(),
-                executed ? "§aAtivado!" : "§7(Neutro/Sem Módulo)");
+                executed ? "§aTriggered!" : "§7(Neutral / No Module)");
         player.sendSystemMessage(Component.literal(msg), true);
 
         return executed;

@@ -26,7 +26,7 @@ public class BrittleBlockDebuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Frágil";
+        return "Brittle";
     }
 
     @Override
@@ -49,14 +49,14 @@ public class BrittleBlockDebuff implements ID20ActionEvent {
         BlockState state = level.getBlockState(pos);
         if (state.isAir() || state.is(Blocks.BEDROCK)) return false;
 
-        // Destrói o bloco colocado sem dropar o item (material esfarelado)
+        // Destroys the placed block without dropping the item (brittle material)
         level.destroyBlock(pos, false);
 
         level.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
                 SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1.0f, 0.8f);
 
-        player.sendSystemMessage(Component.literal("§6⚠ [PENALIDADE] §eO bloco era frágil e esfarelou ao ser posicionado!"), true);
-        LOGGER.info("[D20/Fragil] Bloco em [{}, {}, {}] colocado por {} esfarelou.",
+        player.sendSystemMessage(Component.literal("§6⚠ [PENALTY] §eThe placed block was brittle and crumbled to dust!"), true);
+        LOGGER.info("[D20/Brittle] Block at [{}, {}, {}] placed by {} crumbled.",
                 pos.getX(), pos.getY(), pos.getZ(), player.getScoreboardName());
         return true;
     }

@@ -39,7 +39,7 @@ public class PlayerConstraintHelper {
         if (attr != null && !attr.hasModifier(JUMP_LOCK_ID)) {
             attr.addTransientModifier(JUMP_LOCK_MODIFIER);
         }
-        LOGGER.debug("[D20/Constraint] Jump lock aplicado a {} por {} ticks.", player.getScoreboardName(), durationTicks);
+        LOGGER.debug("[D20/Constraint] Jump lock applied to {} for {} ticks.", player.getScoreboardName(), durationTicks);
     }
 
     public static boolean isJumpLocked(UUID playerUuid) {
@@ -69,7 +69,7 @@ public class PlayerConstraintHelper {
         if (attr != null) {
             attr.removeModifier(JUMP_LOCK_ID);
         }
-        LOGGER.debug("[D20/Constraint] Jump lock removido de {}.", player.getScoreboardName());
+        LOGGER.debug("[D20/Constraint] Jump lock removed from {}.", player.getScoreboardName());
     }
 
     public static void cancelJumpImpulse(ServerPlayer player) {

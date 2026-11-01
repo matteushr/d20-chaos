@@ -25,7 +25,7 @@ public class ReinforcedCraftBuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Reforçado";
+        return "Reinforced";
     }
 
     @Override
@@ -44,10 +44,10 @@ public class ReinforcedCraftBuff implements ID20ActionEvent {
         ServerLevel level = ctx.level();
         if (player == null || level == null) return false;
 
-        // Concede 40 pontos de experiência
+        // Grants 40 experience points
         player.giveExperiencePoints(40);
 
-        // Repara 40 de durabilidade na ferramenta da mão principal ou armadura
+        // Repairs 40 durability on main hand tool or offhand item
         ItemStack item = player.getMainHandItem();
         if (item.isEmpty() || !item.isDamageableItem()) {
             item = player.getOffhandItem();
@@ -57,15 +57,15 @@ public class ReinforcedCraftBuff implements ID20ActionEvent {
             item.setDamageValue(Math.max(0, item.getDamageValue() - 40));
         }
 
-        // Partículas místicas de encantamento
+        // Mystical enchantment particles
         level.sendParticles(ParticleTypes.ENCHANT, player.getX(), player.getY() + 1.0, player.getZ(),
                 30, 0.5, 0.5, 0.5, 0.1);
 
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0f, 1.3f);
 
-        player.sendSystemMessage(Component.literal("§a★ [BÊNÇÃO] §2Fabricação Reforçada! Reparo de ferramenta e +40 XP."), true);
-        LOGGER.info("[D20/Reforcado] Reparo e XP concedidos para {} na fabricação em [{}, {}, {}].",
+        player.sendSystemMessage(Component.literal("§a★ [BLESSING] §2Reinforced Crafting! Tool repaired and +40 XP granted."), true);
+        LOGGER.info("[D20/Reinforced] Repair and XP granted to {} during crafting at [{}, {}, {}].",
                 player.getScoreboardName(), (int)player.getX(), (int)player.getY(), (int)player.getZ());
         return true;
     }

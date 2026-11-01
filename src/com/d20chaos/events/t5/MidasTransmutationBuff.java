@@ -32,7 +32,7 @@ public class MidasTransmutationBuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Toque de Midas";
+        return "Midas Touch";
     }
 
     @Override
@@ -85,11 +85,11 @@ public class MidasTransmutationBuff implements ID20ActionEvent {
                 25, 0.4, 0.4, 0.4, 0.1);
 
         player.sendSystemMessage(Component.literal(String.format(
-                "§6✨ [BÊNÇÃO DE MIDAS] §eO bloco se transmutou em %dx %s!",
+                "§6✨ [MIDAS TOUCH] §eThe block transmuted into %dx %s!",
                 count, rewardItem.getDescription().getString()
         )), true);
 
-        LOGGER.info("[D20/Midas] Bloco transmutado em {}x {} (+15 XP) em [{}, {}, {}] para {}.",
+        LOGGER.info("[D20/Midas] Block transmuted into {}x {} (+15 XP) at [{}, {}, {}] for {}.",
                 count, rewardItem.getDescription().getString(), pos.getX(), pos.getY(), pos.getZ(), player.getScoreboardName());
 
         return true;

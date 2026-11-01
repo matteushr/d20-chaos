@@ -26,7 +26,7 @@ public class HunterBuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Caçador";
+        return "Hunter";
     }
 
     @Override
@@ -45,13 +45,13 @@ public class HunterBuff implements ID20ActionEvent {
         ServerLevel level = ctx.level();
         if (player == null || level == null) return false;
 
-        // Cura vampírica: regenera 4 pontos de vida (2 corações inteiros)
+        // Vampiric heal: regenerates 4 health points (2 full hearts)
         player.heal(4.0f);
 
-        // Concede Força II por 10 segundos (200 ticks)
+        // Grants Strength II for 10 seconds (200 ticks)
         player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 200, 1, false, true));
 
-        // Partículas de cura e corte crítico
+        // Healing and critical sweep particles
         level.sendParticles(ParticleTypes.HEART, player.getX(), player.getY() + 1.2, player.getZ(),
                 8, 0.4, 0.4, 0.4, 0.05);
         level.sendParticles(ParticleTypes.SWEEP_ATTACK, player.getX(), player.getY() + 0.8, player.getZ(),
@@ -60,8 +60,8 @@ public class HunterBuff implements ID20ActionEvent {
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1.0f, 1.2f);
 
-        player.sendSystemMessage(Component.literal("§a★ [BÊNÇÃO] §2Golpe do Caçador! +2 Corações de cura e Força II."), true);
-        LOGGER.info("[D20/Cacador] Golpe do Caçador ativado para {} em [{}, {}, {}].",
+        player.sendSystemMessage(Component.literal("§a★ [BLESSING] §2Hunter's Strike! +2 Hearts healed and Strength II granted."), true);
+        LOGGER.info("[D20/Hunter] Hunter's Strike triggered for {} at [{}, {}, {}].",
                 player.getScoreboardName(), (int)player.getX(), (int)player.getY(), (int)player.getZ());
         return true;
     }

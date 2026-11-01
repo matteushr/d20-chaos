@@ -63,8 +63,8 @@ public class ForcefieldManager {
         level.playSound(null, centerPos.getX(), centerPos.getY(), centerPos.getZ(),
                 SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 0.9f);
 
-        player.sendSystemMessage(Component.literal("§c⚡ [CAMPO DE FORÇA] §6Um Domo de Julgamento selou o perímetro ao seu redor!"), false);
-        LOGGER.info("[D20/CampoDeForça] Campo de Força ativado para {} em [{}, {}, {}] (raio: {}m, duração: {}s).",
+        player.sendSystemMessage(Component.literal("§c⚡ [FORCEFIELD] §6A Judgment Dome has sealed the perimeter around you!"), false);
+        LOGGER.info("[D20/Forcefield] Forcefield activated for {} at [{}, {}, {}] (radius: {}m, duration: {}s).",
                 player.getScoreboardName(), centerPos.getX(), centerPos.getY(), centerPos.getZ(), radius, durationTicks / 20);
         return true;
     }
@@ -78,7 +78,7 @@ public class ForcefieldManager {
         if (removed != null) {
             removed.level.playSound(null, removed.centerPos.getX(), removed.centerPos.getY(), removed.centerPos.getZ(),
                     SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS, 1.0f, 1.2f);
-            LOGGER.info("[D20/CampoDeForça] Campo de Força dissipado para {}.", playerUuid);
+            LOGGER.info("[D20/Forcefield] Forcefield dissipated for {}.", playerUuid);
         }
     }
 
@@ -88,7 +88,7 @@ public class ForcefieldManager {
                     SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS, 1.0f, 1.2f);
         }
         ACTIVE_FORCEFIELDS.clear();
-        LOGGER.info("[D20/CampoDeForça] Todos os campos de força foram encerrados forçadamente.");
+        LOGGER.info("[D20/Forcefield] All forcefields forcefully terminated.");
     }
 
     @SubscribeEvent
@@ -147,14 +147,14 @@ public class ForcefieldManager {
 
                     field.level.playSound(null, px, py, pz, SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 0.8f, 1.5f);
                     field.level.sendParticles(ParticleTypes.PORTAL, px, py + 1.0, pz, 20, 0.4, 0.5, 0.4, 0.1);
-                    player.sendSystemMessage(Component.literal("§c⚡ O Campo de Força de Energia repele sua passagem!"), true);
+                    player.sendSystemMessage(Component.literal("§c⚡ The Energy Forcefield repels your passage!"), true);
                 }
 
                 // 3. Hard teleport containment if escaped via lag or ender pearls
                 if (currentDist >= (field.radius + 4.0)) {
                     player.teleportTo(cx, field.centerPos.getY(), cz);
                     field.level.playSound(null, cx, field.centerPos.getY(), cz, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0f, 1.0f);
-                    player.sendSystemMessage(Component.literal("§c🔒 O Campo de Força não permite sua fuga!"), true);
+                    player.sendSystemMessage(Component.literal("§c🔒 The Forcefield prevents your escape!"), true);
                 }
             }
 

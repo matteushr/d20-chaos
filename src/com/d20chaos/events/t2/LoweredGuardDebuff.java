@@ -28,7 +28,7 @@ public class LoweredGuardDebuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Guarda Baixa";
+        return "Low Guard";
     }
 
     @Override
@@ -47,13 +47,13 @@ public class LoweredGuardDebuff implements ID20ActionEvent {
         ServerLevel level = ctx.level();
         if (player == null || level == null) return false;
 
-        // Desgaste extra na arma da mão principal
+        // Extra wear on main hand weapon/tool
         ItemStack weapon = player.getMainHandItem();
         if (!weapon.isEmpty() && weapon.isDamageableItem()) {
             weapon.hurtAndBreak(6, player, EquipmentSlot.MAINHAND);
         }
 
-        // Aplica Fraqueza I por 6 segundos (120 ticks) e Fadiga de Mineração por 6 segundos
+        // Apply Weakness I for 6 seconds (120 ticks) and Mining Fatigue for 6 seconds
         player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 120, 0, false, true));
         player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 120, 0, false, true));
 
@@ -63,8 +63,8 @@ public class LoweredGuardDebuff implements ID20ActionEvent {
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.SHIELD_BREAK, SoundSource.PLAYERS, 1.0f, 1.1f);
 
-        player.sendSystemMessage(Component.literal("§6⚠ [PENALIDADE] §eSua guarda abriu! Arma desgastada e fraqueza temporária."), true);
-        LOGGER.info("[D20/GuardaBaixa] {} sofreu guarda baixa no combate em [{}, {}, {}].",
+        player.sendSystemMessage(Component.literal("§6⚠ [PENALTY] §eYour guard broke! Tool chipped and temporary weakness applied."), true);
+        LOGGER.info("[D20/LowGuard] {} suffered broken guard in combat at [{}, {}, {}].",
                 player.getScoreboardName(), (int)player.getX(), (int)player.getY(), (int)player.getZ());
         return true;
     }

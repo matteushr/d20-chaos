@@ -28,7 +28,7 @@ public class AbyssalNestTrap implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Ninho Abissal";
+        return "Abyssal Nest";
     }
 
     @Override
@@ -70,8 +70,8 @@ public class AbyssalNestTrap implements ID20ActionEvent {
         level.sendParticles(ParticleTypes.SQUID_INK, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                 30, 0.3, 0.3, 0.3, 0.05);
 
-        player.sendSystemMessage(Component.literal("§4💀 [MALDIÇÃO] §cO minério abriu um Ninho Abissal! Vex e Aranha surgiram!"), true);
-        LOGGER.info("[D20/NinhoAbissal] Cave Spider e Vex gerados em [{}, {}, {}] atacando {}.",
+        player.sendSystemMessage(Component.literal("§4☠ [CALAMITY] §cThe ore fractured into an Abyssal Nest! Vex and Cave Spider spawned!"), true);
+        LOGGER.info("[D20/AbyssalNest] Cave Spider and Vex spawned at [{}, {}, {}] targeting {}.",
                 pos.getX(), pos.getY(), pos.getZ(), player.getScoreboardName());
         return true;
     }

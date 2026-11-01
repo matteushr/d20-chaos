@@ -39,10 +39,10 @@ public class D20Commands {
                             int val = IntegerArgumentType.getInteger(ctx, "value");
                             D20Manager.applyGeneralDecision(player, val, true);
                             DiceTier tier = DiceTier.fromDecision(val);
-                            LOGGER.info("[D20/Comando] {} forçou Decisão Geral para {} ({}) para o jogador {}",
+                            LOGGER.info("[D20/Command] {} forced General Decision to {} ({}) for player {}",
                                     ctx.getSource().getTextName(), val, tier.getTitle(), player.getScoreboardName());
                             ctx.getSource().sendSuccess(() -> Component.literal(
-                                    String.format("§a[D20] Decisão Geral forçada para: §e%d §7(%s %s)",
+                                    String.format("§a[D20] General Decision forced to: §e%d §7(%s %s)",
                                             val, tier.getStatusTag(), tier.getTitle())
                             ), true);
                             return 1;
@@ -53,7 +53,7 @@ public class D20Commands {
                 .then(Commands.literal("list")
                     .executes(ctx -> {
                         var reg = D20EventDispatcher.getRegistry();
-                        StringBuilder sb = new StringBuilder("§6=== [D20 Módulos Registrados (" + reg.size() + ")] ===\n");
+                        StringBuilder sb = new StringBuilder("§6=== [D20 Registered Modules (" + reg.size() + ")] ===\n");
                         for (var entry : reg.values()) {
                             sb.append(String.format("§e- §f%s §7(%s) [%s | %s]\n",
                                     entry.getId(), entry.getName(), entry.getCategory(), entry.getTier().getTitle()));
@@ -74,11 +74,11 @@ public class D20Commands {
                             boolean ok = D20EventDispatcher.forceTriggerById(id, eventCtx);
                             if (ok) {
                                 ctx.getSource().sendSuccess(() -> Component.literal(
-                                        "§a[D20] Módulo '" + id + "' executado com sucesso!"
+                                        "§a[D20] Module '" + id + "' executed successfully!"
                                 ), true);
                             } else {
                                 ctx.getSource().sendFailure(Component.literal(
-                                        "§c[D20] Módulo não encontrado ou falhou ao executar: " + id
+                                        "§c[D20] Module not found or failed to execute: " + id
                                 ));
                             }
                             return ok ? 1 : 0;
@@ -91,10 +91,10 @@ public class D20Commands {
                         .executes(ctx -> {
                             float rate = FloatArgumentType.getFloat(ctx, "rate");
                             D20Manager.setTriggerChance(rate);
-                            LOGGER.info("[D20/Comando] {} alterou a taxa global de gatilho para {}%.",
+                            LOGGER.info("[D20/Command] {} changed global trigger rate to {}%.",
                                     ctx.getSource().getTextName(), (int) (rate * 100));
                             ctx.getSource().sendSuccess(() -> Component.literal(
-                                    String.format("§a[D20] Taxa global de gatilho alterada para: §e%.1f%%", rate * 100)
+                                    String.format("§a[D20] Global trigger rate set to: §e%.1f%%", rate * 100)
                             ), true);
                             return 1;
                         })
@@ -107,7 +107,7 @@ public class D20Commands {
                         int m = dur / 60;
                         int s = dur % 60;
                         ctx.getSource().sendSuccess(() -> Component.literal(
-                                String.format("§6[D20] Duração atual do ciclo: §e%02d:%02d §7(%d segundos). Use §e/d20 timer <segundos>§7 para alterar.",
+                                String.format("§6[D20] Current cycle duration: §e%02d:%02d §7(%d seconds). Use §e/d20 timer <seconds>§7 to change.",
                                         m, s, dur)
                         ), false);
                         return 1;
@@ -128,11 +128,11 @@ public class D20Commands {
                             int s = sec % 60;
                             String formatted = m > 0 ? String.format("%dm %02ds", m, s) : String.format("%ds", s);
 
-                            LOGGER.info("[D20/Comando] {} alterou a duração do ciclo para {} segundos ({}).",
+                            LOGGER.info("[D20/Command] {} changed cycle duration to {} seconds ({}).",
                                     ctx.getSource().getTextName(), sec, formatted);
 
                             ctx.getSource().sendSuccess(() -> Component.literal(
-                                    String.format("§a[D20] Tempo de ciclo alterado para: §e%s §7(%d segundos).\n§7O dado girará e trocará as categorias a cada %s.",
+                                    String.format("§a[D20] Cycle duration changed to: §e%s §7(%d seconds).\n§7The die will roll and switch categories every %s.",
                                             formatted, sec, formatted)
                             ), true);
                             return 1;
@@ -157,11 +157,11 @@ public class D20Commands {
                             int s = sec % 60;
                             String formatted = m > 0 ? String.format("%dm %02ds", m, s) : String.format("%ds", s);
 
-                            LOGGER.info("[D20/Comando] {} alterou a duração do ciclo para {} segundos ({}).",
+                            LOGGER.info("[D20/Command] {} changed cycle duration to {} seconds ({}).",
                                     ctx.getSource().getTextName(), sec, formatted);
 
                             ctx.getSource().sendSuccess(() -> Component.literal(
-                                    String.format("§a[D20] Tempo de ciclo alterado para: §e%s §7(%d segundos).\n§7O dado girará e trocará as categorias a cada %s.",
+                                    String.format("§a[D20] Cycle duration changed to: §e%s §7(%d seconds).\n§7The die will roll and switch categories every %s.",
                                             formatted, sec, formatted)
                             ), true);
                             return 1;
@@ -178,11 +178,11 @@ public class D20Commands {
                         data.setCycleTimerTicks(D20Manager.getCycleDurationTicks());
                         D20Manager.syncToPlayer(player);
 
-                        LOGGER.info("[D20/Comando] {} avançou manualmente o ciclo macro para o resultado {}.",
+                        LOGGER.info("[D20/Command] {} manually advanced the macro cycle to roll {}.",
                                 ctx.getSource().getTextName(), masterRoll);
 
                         ctx.getSource().sendSuccess(() -> Component.literal(
-                                "§6[D20] Próximo ciclo acionado manualmente com sucesso!"
+                                "§6[D20] Next cycle manually triggered successfully!"
                         ), true);
                         return 1;
                     })
@@ -200,11 +200,11 @@ public class D20Commands {
 
                         ctx.getSource().sendSuccess(() -> Component.literal(
                                 String.format("§6=== [D20 Status] ===\n" +
-                                                "§eDecisão Geral: §f%d §7(%s %s)\n" +
-                                                "§eTempo Restante: §f%02d:%02d\n" +
-                                                "§eDuração do Ciclo: §f%ds\n" +
-                                                "§eCaos: §f%d%%\n" +
-                                                "§eTaxa de Gatilho: §f%.1f%%",
+                                                "§eGeneral Decision: §f%d §7(%s %s)\n" +
+                                                "§eRemaining Time: §f%02d:%02d\n" +
+                                                "§eCycle Duration: §f%ds\n" +
+                                                "§eChaos Level: §f%d%%\n" +
+                                                "§eTrigger Rate: §f%.1f%%",
                                         dec, tier.getStatusTag(), tier.getTitle(),
                                         minutes, seconds, dur, data.getChaosLevel(),
                                         D20Manager.getTriggerChance() * 100)
@@ -225,7 +225,7 @@ public class D20Commands {
                         ServerPlayer player = ctx.getSource().getPlayerOrException();
                         boolean created = com.d20chaos.engine.ForcefieldManager.createForcefield(player, player.blockPosition(), 7.0, 300);
                         if (!created) {
-                            ctx.getSource().sendFailure(Component.literal("§cNão foi possível criar o campo agora."));
+                            ctx.getSource().sendFailure(Component.literal("§cUnable to create forcefield at this time."));
                         }
                         return 1;
                     })
@@ -233,7 +233,7 @@ public class D20Commands {
                 .then(Commands.literal("clear")
                     .executes(ctx -> {
                         com.d20chaos.engine.ForcefieldManager.forceClearAll();
-                        ctx.getSource().sendSuccess(() -> Component.literal("§a[D20] Todos os campos de força foram desfeitos!"), true);
+                        ctx.getSource().sendSuccess(() -> Component.literal("§a[D20] All forcefields have been cleared!"), true);
                         return 1;
                     })
                 )
@@ -242,7 +242,7 @@ public class D20Commands {
                         ServerPlayer player = ctx.getSource().getPlayerOrException();
                         ChaosManager.setChaos(player.getUUID(), 0);
                         ChaosManager.updatePlayerBar(player);
-                        ctx.getSource().sendSuccess(() -> Component.literal("§a[D20] Medidor de Caos resetado para 0%!"), false);
+                        ctx.getSource().sendSuccess(() -> Component.literal("§a[D20] Chaos Meter reset to 0%!"), false);
                         return 1;
                     })
                 )
@@ -253,7 +253,7 @@ public class D20Commands {
                             int pct = IntegerArgumentType.getInteger(ctx, "percent");
                             ChaosManager.setChaos(player.getUUID(), pct);
                             ChaosManager.updatePlayerBar(player);
-                            ctx.getSource().sendSuccess(() -> Component.literal("§a[D20] Medidor de Caos definido para: §e" + pct + "%"), false);
+                            ctx.getSource().sendSuccess(() -> Component.literal("§a[D20] Chaos Meter set to: §e" + pct + "%"), false);
                             return 1;
                         })
                     )

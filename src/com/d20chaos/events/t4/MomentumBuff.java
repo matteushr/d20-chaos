@@ -26,7 +26,7 @@ public class MomentumBuff implements ID20ActionEvent {
 
     @Override
     public String getName() {
-        return "Ímpeto";
+        return "Momentum";
     }
 
     @Override
@@ -45,19 +45,19 @@ public class MomentumBuff implements ID20ActionEvent {
         ServerLevel level = ctx.level();
         if (player == null || level == null) return false;
 
-        // Concede Velocidade II e Salto II por 15 segundos (300 ticks)
+        // Grants Speed II and Jump Boost II for 15 seconds (300 ticks)
         player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 300, 1, false, true));
         player.addEffect(new MobEffectInstance(MobEffects.JUMP, 300, 1, false, true));
 
-        // Partículas de rajada de vento e nuvens
+        // Gust particles and clouds
         level.sendParticles(ParticleTypes.CLOUD, player.getX(), player.getY() + 0.2, player.getZ(),
                 20, 0.4, 0.2, 0.4, 0.05);
 
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.ELYTRA_FLYING, SoundSource.PLAYERS, 1.0f, 1.5f);
 
-        player.sendSystemMessage(Component.literal("§a★ [BÊNÇÃO] §2Ventos favoráveis aceleram seus passos! Velocidade II e Salto II."), true);
-        LOGGER.info("[D20/Impeto] Velocidade II e Salto II concedidos a {} em [{}, {}, {}].",
+        player.sendSystemMessage(Component.literal("§a★ [BLESSING] §2Favorable winds accelerate your steps! Speed II and Jump Boost II."), true);
+        LOGGER.info("[D20/Momentum] Speed II and Jump Boost II granted to {} at [{}, {}, {}].",
                 player.getScoreboardName(), (int)player.getX(), (int)player.getY(), (int)player.getZ());
         return true;
     }
