@@ -1,0 +1,24 @@
+# Build & Output
+build/
+bin/
+out/
+*.class
+*.jar
+
+# IDE & Editor files
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs & Temporary files
+*.log
+logs/
+*.tmp
